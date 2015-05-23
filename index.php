@@ -19,18 +19,16 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(isset($_POST['sendMessage'])){
 		
-		$config  	  = json_decode(file_get_contents(MAIL_CONFIG_FILE), true); 
+		$config       = json_decode(file_get_contents(MAIL_CONFIG_FILE), true); 
 		$emailList    = explode(SEPARATOR, file_get_contents(MAIL_LIST_PATH)); 
-		$mailer  	  = getMailer($config); 
-		$subject	  = $_POST['subject']; 
+		$subject      = $_POST['subject']; 
 		$messageBody  = $_POST['message']; 
 		$combinations = findCombinations($messageBody); 
-
 
 		foreach ($emailList as $email) {
 			
 			$message = substitude($messageBody,$combinations); 
-
+			$mailer  = getMailer($config); 
 
 			list($error, $delivered) = sendMail($mailer, array(
 			    'sendTo'  => $email, 
