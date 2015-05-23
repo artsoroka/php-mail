@@ -43,33 +43,23 @@ function substitude($text, $combinations){
 
 function getMailer(array $config){
 
-	$protocol = null; 
-
-	switch ($config['protocol']) {
-		case 'ssl':
-			$protocol = 'ssl'; 
-			break;
-		case 'tls':
-			$protocol = 'tls'; 
-			break;
-		default:
-			$protocol = false; 
-			break;
-	}
-
+	$protocol = (in_array($config['protocol']), array('ssl', 'tls'))
+		    ? $config['protocol'] 
+		    : false; 
+	
 	$mail = new PHPMailer;
 
 	$mail->SMTPDebug = 0; //3;                               
 	
 	$mail->isSMTP();                                      
-	$mail->Host = $config['host']; 
-	$mail->SMTPAuth = true;                               
-	$mail->Username = $config['username'];                  
-	$mail->Password = $config['password'];                            
+	$mail->Host       = $config['host']; 
+	$mail->SMTPAuth   = true;                               
+	$mail->Username   = $config['username'];                  
+	$mail->Password   = $config['password'];                            
 	$mail->SMTPSecure = $protocol;                              
-	$mail->Port = $config['port'];                                     
-	$mail->From = $config['email']; 
-	$mail->FromName = 'Mail system';  
+	$mail->Port       = $config['port'];                                     
+	$mail->From       = $config['email']; 
+	$mail->FromName   = 'Mail system';  
 
 	return $mail; 
 	
