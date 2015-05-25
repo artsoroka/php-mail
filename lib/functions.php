@@ -43,7 +43,7 @@ function substitude($text, $combinations){
 
 function getMailer(array $config){
 
-	$protocol = (in_array($config['protocol']), array('ssl', 'tls'))
+	$protocol = (in_array($config['protocol'], array('ssl', 'tls')))
 		    ? $config['protocol'] 
 		    : false; 
 	
